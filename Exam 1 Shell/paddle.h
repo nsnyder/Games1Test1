@@ -72,6 +72,7 @@ public:
 	void up()
     {
 		velocity.y = -paddleNS::SPEED;
+		velocity.x = 0;
     }
 
 

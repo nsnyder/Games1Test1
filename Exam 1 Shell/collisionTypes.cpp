@@ -60,24 +60,28 @@ void CollisionTypes::initialize(HWND hwnd)
 void CollisionTypes::update()
 {
 	//ADD Keyboard control code here
-	VECTOR2 pos = paddle.getPosition();
 	if(input->isKeyDown(VK_ESCAPE)) {
 		exitGame();
 	}
 	if (input->isKeyDown(VK_LEFT) && !paddle.getTarget())	// if getTarget is true, it's shooting. No XY movement
 	{
-		pos.x += frameTime * -paddle.getVelocity().x;     // move ship along X 
+		paddle.left();
 	}
 	if (input->isKeyDown(VK_RIGHT) && !paddle.getTarget())	// if getTarget is true, it's shooting. No XY movement
 	{
-		pos.x += frameTime * paddle.getVelocity().x;     // move ship along X 
+		paddle.right();
 	}
 	if (input->isKeyDown(VK_SPACE))
 	{
 		// Shoot
-		paddle.setTarget(true);
+		paddle.up();
 	}
-	paddle.setPosition(pos);
+	if (input->isKeyDown(RESET_PUCK) && !puck.getActive()) {
+		puck.setPosition(VECTOR2(puckNS::X,puckNS::Y));
+		puck.setVisible();
+		puck.setActive(true);
+	}
+
 
 	paddle.update(frameTime);
 	puck.update(frameTime);
