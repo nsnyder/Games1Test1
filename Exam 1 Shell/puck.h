@@ -14,7 +14,7 @@ namespace puckNS
     const int HEIGHT = 80;                  // image height
   //ADD position initialization here
 	const int X = GAME_WIDTH/2;   // location on screen
-    const int Y = GAME_HEIGHT/2;
+    const int Y = 25;
     const float SPEED = 50;                
  
 }

@@ -62,19 +62,15 @@ void CollisionTypes::update()
 	//ADD Keyboard control code here
 	VECTOR2 pos = paddle.getPosition();
     
-	if (input->isKeyDown(VK_UP))
-	{
-		pos.y += frameTime * -paddle.getVelocity().y;     // move ship along Y
-	}
-	if (input->isKeyDown(VK_DOWN))
-	{
-		pos.y += frameTime * paddle.getVelocity().y;     // move ship along Y
-	}
-	if (input->isKeyDown(VK_LEFT))
+	if (input->isKeyDown(VK_LEFT) && !paddle.getTarget())
 	{
 		pos.x += frameTime * -paddle.getVelocity().x;     // move ship along X 
 	}
 	if (input->isKeyDown(VK_RIGHT))
+	{
+		pos.x += frameTime * paddle.getVelocity().x;     // move ship along X 
+	}
+	if (input->isKeyDown(VK_SPACE))
 	{
 		pos.x += frameTime * paddle.getVelocity().x;     // move ship along X 
 	}

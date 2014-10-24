@@ -33,6 +33,7 @@ Paddle::Paddle() : Entity()
 bool Paddle::initialize(Game *gamePtr, int width, int height, int ncols,
     TextureManager *textureM)
 {
+	setPosition(VECTOR2(paddleNS::X,paddleNS::Y));
     return(Entity::initialize(gamePtr, width, height, ncols, textureM));
 }
 
@@ -54,11 +55,12 @@ void Paddle::update(float frameTime)
 		pos.x = -paddleNS::WIDTH+1;
 	if(pos.y+paddleNS::HEIGHT < 1)
 		pos.y = GAME_HEIGHT-1;
-	if(pos.y+1 > GAME_HEIGHT)
-		pos.y = -paddleNS::HEIGHT+1;
+	
 
 	// ADD "Top of screen" CODE HERE
-	
+	if(pos.y+1 > GAME_HEIGHT) {
+		pos.y = 50-paddleNS::HEIGHT;
+	}
 	
 	//ADD spriteData.x, spriteData.y assignments here from Entity::position
 	setPosition(pos);

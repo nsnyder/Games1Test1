@@ -13,8 +13,8 @@ namespace paddleNS
     const int WIDTH = 60;                   // image width
     const int HEIGHT = 80;                  // image height
 	
-    const int X = 50;   // location on screen
-	const int Y = GAME_HEIGHT/2;
+	const int X = GAME_WIDTH/2;   // location on screen
+	const int Y = GAME_HEIGHT-25-HEIGHT;
     const float SPEED = 200;             
 	
    
@@ -50,6 +50,7 @@ public:
 
     // Set target
     void setTarget(bool t) {target = t;}
+	bool getTarget() { return target; }
 
     // Get collision
     bool getCollision() {return collision;}

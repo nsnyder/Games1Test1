@@ -31,8 +31,9 @@ Puck::Puck() : Entity()
 bool Puck::initialize(Game *gamePtr, int width, int height, int ncols,
     TextureManager *textureM)
 {
-	directionY = -1;
+	directionY = 0;
 	directionX = 1;
+	setPosition(VECTOR2(puckNS::X,puckNS::Y));
     return(Entity::initialize(gamePtr, width, height, ncols, textureM));
 
 }
