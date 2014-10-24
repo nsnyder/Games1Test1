@@ -13,9 +13,9 @@ namespace paddleNS
     const int WIDTH = 60;                   // image width
     const int HEIGHT = 80;                  // image height
 	
-	const int X = GAME_WIDTH/2;   // location on screen
-	const int Y = GAME_HEIGHT-25-HEIGHT;
-    const float SPEED = 200;             
+	const int X = GAME_WIDTH/2-WIDTH/2;   // location on screen
+	const int Y = GAME_HEIGHT-100;
+    const float SPEED = 130;             
 	
    
 }
@@ -69,6 +69,11 @@ public:
         velocity.x = -paddleNS::SPEED;
     }
 	//ADD up() here
+	void up()
+    {
+		velocity.y = -paddleNS::SPEED;
+    }
+
 
 };
 #endif

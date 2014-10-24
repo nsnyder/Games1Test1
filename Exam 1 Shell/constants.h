@@ -115,7 +115,7 @@ const char SOUND_BANK[] = "audio\\Win\\Sound Bank.xsb";
 const char FX[]   = "fx";
 
 // Font Size
-const int FONT_SIZE = 24;
+const int FONT_SIZE = 20;
 
 
 #endif

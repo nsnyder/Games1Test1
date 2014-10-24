@@ -33,7 +33,7 @@ void CollisionTypes::initialize(HWND hwnd)
 	//ADD Puck and Paddle initialization code here
 
 	// Puck
-	if (!puckTM.initialize(graphics, PUCK_IMAGE))
+	if (!puckTM.initialize(graphics, PUCK_IMAGE))	// Target2
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Puck texture initialization failed"));
 	if (!puck.initialize(this, puckNS::WIDTH,puckNS::HEIGHT,0, &puckTM))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error init puck"));
@@ -46,9 +46,9 @@ void CollisionTypes::initialize(HWND hwnd)
     
 	//ADD Font initialization code here
 	dxFont = new TextDX();
-    if(dxFont->initialize(graphics, FONT_SIZE, false, false, "Arial") == false)
+    if(dxFont->initialize(graphics, FONT_SIZE, false, false, "Calibri") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DirectX font"));
-    
+	dxFont->setFontColor(graphicsNS::RED);
 	score = 0;
 	
 	return;
@@ -61,18 +61,21 @@ void CollisionTypes::update()
 {
 	//ADD Keyboard control code here
 	VECTOR2 pos = paddle.getPosition();
-    
-	if (input->isKeyDown(VK_LEFT) && !paddle.getTarget())
+	if(input->isKeyDown(VK_ESCAPE)) {
+		exitGame();
+	}
+	if (input->isKeyDown(VK_LEFT) && !paddle.getTarget())	// if getTarget is true, it's shooting. No XY movement
 	{
 		pos.x += frameTime * -paddle.getVelocity().x;     // move ship along X 
 	}
-	if (input->isKeyDown(VK_RIGHT))
+	if (input->isKeyDown(VK_RIGHT) && !paddle.getTarget())	// if getTarget is true, it's shooting. No XY movement
 	{
 		pos.x += frameTime * paddle.getVelocity().x;     // move ship along X 
 	}
 	if (input->isKeyDown(VK_SPACE))
 	{
-		pos.x += frameTime * paddle.getVelocity().x;     // move ship along X 
+		// Shoot
+		paddle.setTarget(true);
 	}
 	paddle.setPosition(pos);
 
@@ -97,11 +100,11 @@ void CollisionTypes::collisions()
 	//ADD Collision detection code here
 
 	if(puck.collidesWith(paddle,collisionVector) && !puck.getCollision()) {
-		puck.changeDirectionX();
-		puck.changeDirectionY();
 		puck.setCollision(true);
 		audio->playCue(FX);
 		score++;
+		puck.setActive(false);
+		puck.setInvisible();
 	} else {
 		// See if it's still colliding
 		puck.setCollision(puck.collidesWith(paddle,collisionVector));
@@ -116,7 +119,7 @@ void CollisionTypes::render()
 {
 	// Integer to string conversion here
 	std::stringstream s2;
-	s2 << score;
+	s2 << "Hits: " << score;
 
 
     graphics->spriteBegin();                // begin drawing sprites
@@ -127,7 +130,7 @@ void CollisionTypes::render()
 
 	// Printing code skeleton
 	
-	dxFont->print(s2.str(),10,10);         // display message
+	dxFont->print(s2.str(),GAME_WIDTH/2,GAME_HEIGHT/2);         // display message
 
     graphics->spriteEnd();                  // end drawing sprites
 }

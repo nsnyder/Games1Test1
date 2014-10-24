@@ -12,8 +12,8 @@ Paddle::Paddle() : Entity()
     spriteData.y = paddleNS::Y;
     spriteData.rect.bottom = paddleNS::HEIGHT/2;    
     spriteData.rect.right = paddleNS::WIDTH;
-    velocity.x = 50;                             
-    velocity.y = 50;                             
+	velocity.x = 0                             
+    velocity.y = 0;                             
     startFrame = 0;              
     endFrame     = 0;              
     currentFrame = startFrame;
@@ -47,20 +47,28 @@ void Paddle::update(float frameTime)
     Entity::update(frameTime);
     //ADD POSITION UPDATING HERE
 	VECTOR2 pos = getPosition();
+	pos.x += frameTime * getVelocity().x;     // move ship along X 
+	if(target) {
+		pos.y += frameTime * velocity.y * -1;     // move ship along Y
+	}
 
     // ADD WRAPPING CODE HERE.
 	if(pos.x+paddleNS::WIDTH < 1)
 		pos.x = GAME_WIDTH-1;
 	if(pos.x+1 > GAME_WIDTH)
 		pos.x = -paddleNS::WIDTH+1;
-	if(pos.y+paddleNS::HEIGHT < 1)
-		pos.y = GAME_HEIGHT-1;
+	/*if(pos.y+1 > GAME_HEIGHT) {
+		pos.y = 50-paddleNS::HEIGHT;
+	}*/
 	
 
 	// ADD "Top of screen" CODE HERE
-	if(pos.y+1 > GAME_HEIGHT) {
-		pos.y = 50-paddleNS::HEIGHT;
+	
+	if(pos.y-paddleNS::HEIGHT/2 < 0) {
+		pos.y = paddleNS::Y;
+		setTarget(false);
 	}
+		
 	
 	//ADD spriteData.x, spriteData.y assignments here from Entity::position
 	setPosition(pos);
